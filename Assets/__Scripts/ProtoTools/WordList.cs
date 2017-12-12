@@ -61,8 +61,8 @@ public class WordList : MonoBehaviour {
                 wordCount = words.Count;
                 yield return null;
             }
-            gameObject.SendMessage("WordListParseComplete");
         }
+        gameObject.SendMessage("WordListParseComplete");
     }
 
     static public List<string> GET_WORDS()

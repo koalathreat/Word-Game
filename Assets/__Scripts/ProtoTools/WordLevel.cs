@@ -8,13 +8,13 @@ public class WordLevel {
     public int levelNum;
     public int longWordIndex;
     public string word;
-    public Dictionary<char, int> charDict;
+    public Dictionary<char,int> charDict;
 
     public List<string> subWords;
     
-    static public Dictionary<char, int> MakeCharDict(string w)
+    static public Dictionary<char,int> MakeCharDict(string w)
     {
-        Dictionary<char, int> dict = new Dictionary<char, int>();
+        Dictionary<char, int> dict = new Dictionary<char,int>();
         char c;
         for(int i=0; i<w.Length; i++)
         {
@@ -33,7 +33,7 @@ public class WordLevel {
 
     public static bool CheckWordInLevel(string str, WordLevel level)
     {
-        Dictionary<char, int> counts = new Dictionary<char, int>();
+        Dictionary<char,int> counts = new Dictionary<char,int>();
         for(int i=0; i<str.Length; i++)
         {
             char c = str[i];
