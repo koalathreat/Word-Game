@@ -24,6 +24,7 @@ public class WordGame : MonoBehaviour {
     public Color bigColorDim = new Color(0.8f, 0.8f, 0.8f);
     public Color bigColorSelected = new Color(1f, 0.9f, 0.7f);
     public Vector3 bigLetterCenter = new Vector3(0, -16, 0);
+    public Color[] wyrdPalette;
     [Header("Set Dynamically")]
     public GameMode mode = GameMode.preGame;
     public WordLevel currLevel;
@@ -133,11 +134,14 @@ public class WordGame : MonoBehaviour {
                 lett.c = c;
                 pos = new Vector3(wordArea.x + left + j * letterSize, wordArea.y);
                 pos.y -= (i % numRows) * letterSize;
+                lett.posImmediate = pos + Vector3.up * (20 + i % numRows);
                 lett.pos = pos;
+                lett.timeStart = Time.time + i * 0.05f;
                 go.transform.localScale = Vector3.one * letterSize;
                 wyrd.Add(lett);
             }
             if (showAllWyrds) wyrd.visible = true;
+            wyrd.color = wyrdPalette[word.Length - WordList.WORD_LENGTH_MIN];
             wyrds.Add(wyrd);
             if(i%numRows == numRows-1)
             {
@@ -160,8 +164,10 @@ public class WordGame : MonoBehaviour {
 
             // Set the initial position of the big Letters below screen
             pos = new Vector3(0, -100, 0);
+            lett.posImmediate = pos;
             lett.pos = pos;    // You'll add more code around this line later
-
+            lett.timeStart = Time.time + currLevel.subWords.Count * 0.05f;
+            lett.easingCuve = Easing.Sin + "-0.18";
             col = bigColorDim;
             lett.color = col;
             lett.visible = true; // This is always true for big letters
@@ -336,6 +342,7 @@ public class WordGame : MonoBehaviour {
             if (string.Equals(testWord, subWord))
             {                    // b
                 HighlightWyrd(i);
+                ScoreManager.SCORE(wyrds[i], 1);
                 foundTestWord = true;
             }
             else if (testWord.Contains(subWord))
@@ -354,6 +361,7 @@ public class WordGame : MonoBehaviour {
             {
                 ndx = numContained - i - 1;
                 HighlightWyrd(containedWords[ndx]);
+                ScoreManager.SCORE(wyrds[containedWords[ndx]], i + 2);
             }
         }
 
