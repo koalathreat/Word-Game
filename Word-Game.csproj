@@ -229,6 +229,8 @@
     <Compile Include="Assets\__Scripts\ProtoTools\PT_XMLReader.cs" />
     <Compile Include="Assets\__Scripts\ProtoTools\Scoreboard.cs" />
     <Compile Include="Assets\__Scripts\ProtoTools\Utils.cs" />
+    <Compile Include="Assets\__Scripts\ProtoTools\WordGame.cs" />
+    <Compile Include="Assets\__Scripts\ProtoTools\WordLevel.cs" />
     <Compile Include="Assets\__Scripts\ProtoTools\WordList.cs" />
   </ItemGroup>
   <ItemGroup>

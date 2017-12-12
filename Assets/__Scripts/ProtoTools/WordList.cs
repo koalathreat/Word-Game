@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class WordList : MonoBehaviour {
 
-    public static WordList s;
+    private static WordList S;
+    [Header("Set in Inspector")]
     public TextAsset wordListText;
     public int numToParseBeforeYield = 10000;
     public int wordLengthMin = 3;
     public int wordLengthMax = 7;
-    public bool __________;
+    [Header("Set Dynamically")]
     public int currLine = 0;
     public int totalLines;
     public int longWordCount;
@@ -21,14 +22,20 @@ public class WordList : MonoBehaviour {
 
     void Awake()
     {
-        s = this;    
+        S = this;    
     }
 
-    void Start()
+    void Init()
     {
         lines = wordListText.text.Split('\n');
         totalLines = lines.Length;
+
         StartCoroutine(ParseLines());
+    }
+
+    static public void INIT()
+    {
+        S.Init();
     }
 
     public IEnumerator ParseLines()
@@ -54,26 +61,52 @@ public class WordList : MonoBehaviour {
                 wordCount = words.Count;
                 yield return null;
             }
+            gameObject.SendMessage("WordListParseComplete");
         }
     }
 
-    public List<string> GetWords()
+    static public List<string> GET_WORDS()
     {
-        return (words);
+        return (S.words);
     }
 
-    public string GetWord(int ndx)
+    static public string GET_WORD(int ndx)
     {
-        return (words[ndx]);
+        return (S.words[ndx]);
     }
 
-    public List<string> GetLongWords()
+    static public List<string> GET_LONG_WORDS()
     {
-        return (longWords);
+        return (S.longWords);
     }
 
-    public string GetLongWord(int ndx)
+    static public string GET_LONG_WORD(int ndx)
     {
-        return (longWords[ndx]);
+        return (S.longWords[ndx]);
+    }
+    
+    static public int WORD_COUNT
+    {
+        get { return S.wordCount; }
+    }
+    
+    static public int LONG_WORD_COUNT
+    {
+        get { return S.longWordCount; }
+    }
+
+    static public int NUM_TO_PARSE_BEFORE_YIELD
+    {
+        get { return S.numToParseBeforeYield; }
+    }
+
+    static public int WORD_LENGTH_MIN
+    {
+        get { return S.wordLengthMin; }
+    }
+
+    static public int WORD_LENGTH_MAX
+    {
+        get { return S.wordLengthMax; }
     }
 }
